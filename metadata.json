@@ -1,0 +1,6 @@
+{
+  "name": "Logo Ali Barbearia",
+  "description": "Sistema de gestão integrado para barbearia anexa à Logo Ali Tabacaria com fluxo de comanda digital, controle de acesso e fidelidade.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
