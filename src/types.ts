@@ -12,13 +12,20 @@ export interface User {
   role: UserRole;
   phone?: string;
   isActive: boolean;
-  avatar?: string;
+  avatar?: string; // Can be an emoji or url
+  bio?: string;    // Brief description about the barber
+  login?: string;
+  password?: string;
+  permissions?: string[];
+  photoUrl?: string; // Barber's actual photo URL
 }
 
 export interface BarberDetail {
   userId: string;
-  commissionRateStandard: number; // e.g. 50%
-  commissionRateSubscription: number; // e.g. 30% for loyalty plans
+  commissionRateStandard: number; // e.g. 0.50 (50%)
+  commissionRateSubscription: number; // e.g. 0.35 (35%)
+  commissionRateProduct?: number;    // e.g. 0.15 (15%) for product sales
+  commissionRateTabacaria?: number;  // e.g 0.05 for tabacaria sales
 }
 
 export interface Service {
@@ -27,7 +34,15 @@ export interface Service {
   price: number;
   durationMinutes: number;
   description: string;
-  category: 'HAIR' | 'BEARD' | 'COMBO' | 'TREATMENT';
+  category: string;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  stock: number;
+  description: string;
 }
 
 export interface LoyaltyPlan {
@@ -35,12 +50,13 @@ export interface LoyaltyPlan {
   name: string;
   priceMonthly: number;
   description: string;
-  servicesIncludedCount: number; // e.g., 4 hair cuts per month
-  currentCommissionRate: number; // Commission percentage for this subscription services (e.g., 30%)
+  servicesIncludedCount: number; // number of uses allowed per month
+  currentCommissionRate: number; // barber payout for these customer visits (in %)
   rules: string[];
 }
 
 export interface CustomerSubscription {
+  id: string;
   customerId: string;
   planId: string;
   startDate: string;
@@ -66,20 +82,20 @@ export interface Appointment {
   status: AppointmentStatus;
 }
 
-export type ComandaStatus = 'OPEN' | 'WAITING_PAYMENT' | 'PAID' | 'CANCELLED';
+export type ComandaStatus = 'OPEN' | 'PAID' | 'CANCELLED';
 
 export interface ComandaItem {
   id: string;
   description: string;
   quantity: number;
   unitPrice: number;
-  isExternal: boolean; // Indicates if item was added manually (e.g. from tabacaria)
-  addedBy: 'BARBER' | 'CASHIER';
+  isProduct: boolean; // distinguish service from product
+  isTabacaria?: boolean; // tabacaria products
 }
 
 export interface Comanda {
   id: string;
-  appointmentId?: string; // Optional if tied to a pre-booked appointment
+  appointmentId?: string; // optional association
   customerId: string;
   customerName: string;
   barberId: string;
@@ -92,6 +108,19 @@ export interface Comanda {
   createdAt: string;
   updatedAt: string;
   completedAt?: string;
-  commissionAmount?: number; // Calculated commission for the barber
+  commissionAmount?: number; // total payout to barber
   paymentMethod?: 'MONEY' | 'CARD' | 'PIX' | 'SUBSCRIPTION';
+}
+
+export interface SystemParameters {
+  shopName: string;
+  openTime: string; // "09:00"
+  closeTime: string; // "19:00"
+  defaultCommissionService: number; // e.g. 50%
+  defaultCommissionProduct: number; // e.g. 10%
+  defaultCommissionTabacaria?: number; // e.g. 0%
+  address: string;
+  phone: string;
+  primaryColor?: string; // e.g. "#eab308" (yellow)
+  logoUrl?: string; // customizable image URL
 }

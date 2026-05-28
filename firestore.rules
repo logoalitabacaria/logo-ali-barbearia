@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Services collection
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Products collection
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Appointments collection
+    match /appointments/{appointmentId} {
+      allow read, write: if true;
+    }
+
+    // Comandas collection
+    match /comandas/{comandaId} {
+      allow read, write: if true;
+    }
+
+    // Barber Details collection
+    match /barberDetails/{barberId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Loyalty plans
+    match /plans/{planId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Subscriptions
+    match /subscriptions/{subId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // App parameters / parameters
+    match /parameters/{paramId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Categories
+    match /categories/{catId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

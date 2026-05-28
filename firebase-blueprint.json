@@ -1,0 +1,115 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile in Logo Ali Barbearia",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "phone": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "avatar": { "type": "string" },
+        "login": { "type": "string" },
+        "password": { "type": "string" },
+        "permissions": { "type": "array" }
+      },
+      "required": ["id", "name", "role", "login", "password"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Haircut or beard services offered",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "durationMinutes": { "type": "integer" },
+        "description": { "type": "string" },
+        "category": { "type": "string" }
+      },
+      "required": ["id", "name", "price", "durationMinutes"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Barbershop or tabacaria physical products",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "stock": { "type": "integer" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "name", "price", "stock"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Scheduled appointments with barbers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "barberId": { "type": "string" },
+        "barberName": { "type": "string" },
+        "serviceId": { "type": "string" },
+        "serviceName": { "type": "string" },
+        "servicePrice": { "type": "number" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "customerId", "barberId", "serviceId", "date", "time", "status"]
+    },
+    "Comanda": {
+      "title": "Comanda",
+      "description": "Customer comanda with services and products",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "appointmentId": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "barberId": { "type": "string" },
+        "barberName": { "type": "string" },
+        "status": { "type": "string" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "total": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "completedAt": { "type": "string" },
+        "commissionAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" }
+      },
+      "required": ["id", "customerId", "barberId", "status", "items", "total"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of all system users"
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Collection of salon services available"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Collection of inventory products"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Collection of haircut/beard appointment bookings"
+    },
+    "/comandas/{comandaId}": {
+      "schema": "Comanda",
+      "description": "Receipts and bills for active/paid customers"
+    }
+  }
+}
